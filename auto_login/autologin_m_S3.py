@@ -39,7 +39,7 @@ REFRESH_INTERVAL = 10  # 刷新间隔秒数
 
 # 设置 Chrome 浏览器选项
 options = uc.ChromeOptions()
-options.add_argument('--headless')  # 如需无头可以取消注释
+#options.add_argument('--headless')  # 如需无头可以取消注释
 options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
@@ -60,6 +60,14 @@ try:
         if count % max_iterations == 0 and count != 0:
             print("🔁 达到刷新上限，重启浏览器中...")
             driver.quit()
+            # 设置 Chrome 浏览器选项
+            options = uc.ChromeOptions()
+            #options.add_argument('--headless')  # 如需无头可以取消注释
+            options.add_argument('--disable-gpu')
+            options.add_argument('--no-sandbox')
+            options.add_argument('--disable-dev-shm-usage')
+
+            # 使用 undetected-chromedriver 初始化 driver
             driver = uc.Chrome(options=options)
 
         driver.get(PRODUCT_URL)
@@ -130,8 +138,8 @@ try:
                 signin_btn = driver.find_element(By.XPATH, '//button[contains(@class, "index_loginButton__") and text()="SIGN IN"]')
                 driver.execute_script("arguments[0].click();", signin_btn)
 
-                time.sleep(40)
-                break
+                time.sleep(200)
+               
             except Exception as e:
                 print(f"❌ 登录失败: {e}")
                 time.sleep(40)
